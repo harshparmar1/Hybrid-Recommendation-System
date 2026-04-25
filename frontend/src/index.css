@@ -1,0 +1,236 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-dark-900 text-white font-sans antialiased;
+    margin: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { @apply bg-dark-800; }
+  ::-webkit-scrollbar-thumb { @apply bg-brand-600 rounded-full; }
+}
+
+@layer components {
+  /* Glass card */
+  .glass {
+    @apply bg-dark-600/60 backdrop-blur-md border border-white/10 rounded-2xl;
+  }
+
+  /* Primary gradient button */
+  .btn-primary {
+    @apply relative inline-flex items-center justify-center gap-2
+           bg-gradient-to-r from-brand-600 to-accent-purple
+           text-white font-semibold px-6 py-3 rounded-xl
+           shadow-glow transition-all duration-300
+           hover:shadow-glow-lg hover:scale-[1.02] active:scale-95
+           disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-glow;
+  }
+
+  /* Ghost button */
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2
+           bg-dark-400/60 border border-white/10 text-white/80 font-medium
+           px-4 py-2.5 rounded-xl transition-all duration-200
+           hover:bg-dark-300/60 hover:border-brand-500/50 hover:text-white
+           active:scale-95
+           disabled:opacity-40 disabled:cursor-not-allowed;
+  }
+
+  /* Text input */
+  .input-field {
+    @apply w-full bg-dark-500/80 border border-white/10 text-white placeholder-white/30
+           px-4 py-3 rounded-xl outline-none transition-all duration-200
+           focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20;
+  }
+
+  /* Product card */
+  .product-card {
+    @apply glass shadow-card transition-all duration-300
+           hover:shadow-card-hover hover:-translate-y-1 hover:border-brand-500/30
+           cursor-default overflow-hidden;
+  }
+
+  /* Tag */
+  .tag {
+    @apply text-xs font-semibold px-2.5 py-0.5 rounded-full;
+  }
+
+  /* Section heading */
+  .section-heading {
+    @apply text-2xl font-bold text-white mb-6;
+  }
+
+  /* Gradient text */
+  .grad-text {
+    @apply bg-gradient-to-r from-brand-400 via-accent-purple to-accent-pink bg-clip-text text-transparent;
+  }
+}
+
+@layer utilities {
+  /* Animated background shimmer for skeletons */
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      rgba(255,255,255,0.04) 25%,
+      rgba(255,255,255,0.10) 50%,
+      rgba(255,255,255,0.04) 75%
+    );
+    background-size: 200% 100%;
+    @apply animate-shimmer rounded-lg;
+  }
+
+  /* ── Scroll Progress Bar ─────────────────────────────────────────── */
+  .scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #6366f1, #a855f7, #ec4899, #06b6d4);
+    background-size: 300% 100%;
+    animation: gradientRotate 3s linear infinite;
+    z-index: 9999;
+    transform-origin: left;
+    transition: transform 0.1s linear;
+    border-radius: 0 2px 2px 0;
+    box-shadow: 0 0 10px rgba(99,102,241,0.5), 0 0 30px rgba(99,102,241,0.2);
+  }
+
+  /* ── Animated Gradient Border ────────────────────────────────────── */
+  .gradient-border {
+    position: relative;
+  }
+  .gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+      var(--gradient-angle, 0deg),
+      #6366f1,
+      #a855f7,
+      #ec4899,
+      #06b6d4,
+      #6366f1
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .gradient-border:hover::before {
+    opacity: 1;
+    animation: borderRotate 3s linear infinite;
+  }
+
+  @keyframes borderRotate {
+    0%   { --gradient-angle: 0deg; }
+    100% { --gradient-angle: 360deg; }
+  }
+
+  /* ── Floating Particles ──────────────────────────────────────────── */
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  /* ── Mouse Spotlight ─────────────────────────────────────────────── */
+  .spotlight-container {
+    position: relative;
+    overflow: hidden;
+  }
+  .spotlight {
+    pointer-events: none;
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba(99,102,241,0.08) 0%,
+      rgba(168,85,247,0.04) 30%,
+      transparent 70%
+    );
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    transition: opacity 0.3s ease;
+  }
+
+  /* ── 3D Tilt Card ────────────────────────────────────────────────── */
+  .tilt-card {
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    transition: transform 0.15s ease-out;
+  }
+  .tilt-card-inner {
+    transform-style: preserve-3d;
+    transition: transform 0.15s ease-out;
+  }
+
+  /* ── Typewriter ──────────────────────────────────────────────────── */
+  .typewriter-text {
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 2px solid rgba(99,102,241,0.7);
+    width: 0;
+    animation: 
+      typewriter 2.5s steps(55, end) 0.5s forwards,
+      blinkCursor 0.75s step-end infinite;
+  }
+
+  @keyframes typewriter {
+    from { width: 0; }
+    to { width: 100%; }
+  }
+
+  @keyframes blinkCursor {
+    0%, 100% { border-color: transparent; }
+    50% { border-color: rgba(99,102,241,0.7); }
+  }
+
+  /* ── Cart/Wishlist Badge Bounce ──────────────────────────────────── */
+  .badge-bounce {
+    animation: badgeBounce 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+
+  @keyframes badgeBounce {
+    0%   { transform: scale(0); }
+    60%  { transform: scale(1.3); }
+    100% { transform: scale(1); }
+  }
+
+  /* ── Heart Animation ─────────────────────────────────────────────── */
+  .heart-active {
+    animation: heartBeat 0.35s ease-in-out;
+  }
+
+  @keyframes heartBeat {
+    0%   { transform: scale(1); }
+    25%  { transform: scale(1.3); }
+    50%  { transform: scale(0.95); }
+    100% { transform: scale(1); }
+  }
+
+  /* @property for gradient angle animation */
+  @property --gradient-angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+  }
+}

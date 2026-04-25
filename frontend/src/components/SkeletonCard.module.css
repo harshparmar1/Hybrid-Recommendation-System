@@ -1,0 +1,90 @@
+/* ── Shimmer gradient ──────────────────────────────────── */
+.bar,
+.track {
+  border-radius: 6px;
+  background: linear-gradient(
+    90deg,
+    var(--bg-panel) 0%,
+    var(--bg-hover)  50%,
+    var(--bg-panel) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+}
+
+/* ── Card shell ────────────────────────────────────────── */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  opacity: 0;
+  animation: fadeIn 320ms ease both;
+  animation-delay: var(--delay, 0ms);
+}
+
+/* ── Sections ──────────────────────────────────────────── */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.divider {
+  height: 1px;
+  background: var(--border);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.metaRow {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.scoreSection {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.scoreHeaderRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* ── Bar sizes ─────────────────────────────────────────── */
+.barId    { height: 13px; width: 52%; }
+.barPill  { height: 22px; width: 22%; border-radius: 999px; }
+.barLabel { height: 8px;  width: 38%; }
+.barFull  { height: 12px; width: 100%; }
+.barMid   { height: 12px; width: 68%; }
+.barShort { height: 12px; width: 44%; }
+.barPrice { height: 14px; width: 50%; }
+.barTiny  { height: 8px;  width: 14%; }
+
+.track {
+  height: 4px;
+  border-radius: 999px;
+}
+
+/* ── Keyframes ─────────────────────────────────────────── */
+@keyframes shimmer {
+  0%   { background-position:  200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
